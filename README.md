@@ -1,7 +1,8 @@
 # Snake OS
 
 Small OS that runs only snake game.
-Try web demo: (n/a)
+
+Try web demo: [here](nexsqaud.github.io)
 
 ## Controls
 
