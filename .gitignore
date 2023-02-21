@@ -1,0 +1,8 @@
+build/**
+build/
+
+debug.log
+debug.img
+dump.dmp
+
+release.img
