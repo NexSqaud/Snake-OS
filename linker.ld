@@ -2,10 +2,10 @@ OUTPUT_FORMAT("binary");
 ENTRY(_start);
 SECTIONS
 {
-	CORE_BEGIN = 0xA00;
+	_core_begin = 0x500;
 	
 	. = 0x0;
-	.bootloader : AT(0x0)
+	.bootloader 0x7C00 : AT(0x0)
 	{
 		*bootloader.s.o(.text);
 	}
@@ -24,7 +24,7 @@ SECTIONS
 	}
 
     . = 0x0200;
-    .text CORE_BEGIN : AT(0x0200)
+    .text _core_begin : AT(0x0200)
     {
         _text = .;
 		*snake.c.o(.text.main);

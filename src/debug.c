@@ -88,3 +88,5 @@ void printHex(uint32_t num)
     }
     com1WriteChar(conversionTable[n]);
 }
+
+// TODO: printFormated

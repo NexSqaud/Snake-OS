@@ -4,6 +4,7 @@ __asm (".code16gcc");
 #include <debug.h>
 #include <graphics.h>
 #include <memory.h>
+#include <utils.h>
 
 #define CELL_WIDTH 10
 #define CELL_HEIGHT 10
@@ -40,41 +41,9 @@ typedef struct SnakeNode
 void update(uint8_t delta);
 void render(void);
 
-static uint32_t next = 1;
-
-uint16_t rand(void) // RAND_MAX assumed to be 32767
-{
-    next = next * 1103515245 + 12345;
-    return (uint16_t)(next/65536) % 32768;
-}
-
-void srand(uint16_t seed)
-{
-    next = seed;
-}
-
-uint32_t getTime(void)
-{
-	uint16_t high = 0;
-	uint16_t low = 0;
-	
-	__asm("int $0x1A" : "=c"(high), "=d"(low) : "a"(0x0));
-	
-	return (high << 16) | low;
-}
-
 void __attribute__ ((section (".text.main"))) main(void) 
 {
-	//debugInit();
-	
-	printHex(0x500);
-	printString("\n");
-	printHex(0x666);
-	printString("\n");
-	printHex(0xDEAD);
-	printString("\n");
-	printHex(0xBEEF);
-	printString("\n");
+	debugInit();
 	
 	LOG("Debug initialized");
 	
@@ -119,8 +88,6 @@ void handleKeyboard(void)
 			"movb %%al, (%0)"
 			:: "b"(&pressedKey) : "ax");
 	
-	printDec(pressedKey);
-	
 	if(pressedKey)
 	{
 		__asm("int $0x16" :: "a"(0x0));
@@ -152,7 +119,6 @@ void getNextCellPosition(uint16_t x, uint16_t y, uint16_t* rx, uint16_t* ry)
 
 uint8_t isSnakeOutside(void)
 {
-	LOG("START");
 	SnakeNode* node = tailNode;
 	
 	while(node)
@@ -160,14 +126,12 @@ uint8_t isSnakeOutside(void)
 		if(node->x < 0 || node->x >= CELLS_COUNT_X
 			|| node->y < 0 || node->y >= CELLS_COUNT_Y)
 		{
-			LOG("OUTSIDE");
 			return 1;
 		}
 		
 		node = node->next;
 	}
 	
-	LOG("INSIDE");
 	return 0;
 }
 
@@ -189,8 +153,6 @@ void update(uint8_t delta)
 				tailNode = (SnakeNode*)malloc(sizeof(SnakeNode));
 				tailNode->next = (SnakeNode*)malloc(sizeof(SnakeNode));
 				tailNode->next->next = (SnakeNode*)malloc(sizeof(SnakeNode));
-				
-				printHex((uint32_t)tailNode);
 				
 				do
 				{

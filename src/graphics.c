@@ -9,7 +9,6 @@ uint8_t* backBuffer;
 void vgaSetFrontbufferPixel(uint16_t x, uint16_t y, uint8_t color)
 {
 	static uint8_t* frontBuffer = (uint8_t*)FRONT_BUFFER_ADDRESS;
-	//__asm("int $0x10" :: "a"(0x0c00 | color), "c"(x), "d"(y));
 	if(x > SCREEN_WIDTH || y > SCREEN_HEIGHT || frontBuffer == NULL) return;
 	
 	frontBuffer[y * SCREEN_WIDTH + x] = color;

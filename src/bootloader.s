@@ -1,9 +1,7 @@
 .code16
 
-.equ VIDEO_MODE, ((0x11B) | (1 << 14))
-
 .section .data
-	.extern CORE_BEGIN
+	.extern _core_begin
 	
 	.extern _core_size_sectors
 	.extern _bootloader_last_opcode
@@ -18,7 +16,7 @@ _start:
 	
 	movw $0x00, %ax
 	movw %ax, %es
-	movw $CORE_BEGIN, %ax
+	movw $_core_begin, %ax
 	movw %ax, %bx
 	
 	xor %ax, %ax
@@ -30,10 +28,9 @@ _start:
 	movb $2, %cl
 	movb $0, %dh
 	
-	# mov %bx, %si
 	int $0x13
 	
-	movw $CORE_BEGIN, %ax
+	movw $_core_begin, %ax
 	jmp %ax
 	
 	jmp _bootloader_last_opcode

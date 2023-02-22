@@ -26,6 +26,7 @@ void* heapEnd = (void*)0x7FFFF;
 
 void memoryInit(void)
 {
+	// TODO: Fix
 	/*
 	uint32_t continiousId = 0;
 	size_t entries = 0;
