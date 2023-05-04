@@ -1,0 +1,6 @@
+build/**
+build/
+
+debug.img
+
+release.img
