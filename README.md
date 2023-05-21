@@ -2,7 +2,7 @@
 
 Small OS that runs only snake game.
 
-Try web demo: [here](nexsqaud.github.io)
+Try web demo: [here](https://nexsqaud.github.io)
 
 ## Controls
 
